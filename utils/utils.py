@@ -23,7 +23,7 @@ def load_file(path):
 
 def filter_by_status():
     """
-    :return: возвращает отсортированный по "date" список последних {number_of_operations} операций клиента
+    :return: Возвращает список успешных операций клиента
     """
     file = load_file(path_operations)
     executed_opertions = []
@@ -41,19 +41,6 @@ def sorting_by_date() -> list:
     """
     date_operations = filter_by_status()
     return sorted(date_operations, key=itemgetter('date'), reverse=True)[0:number_of_operations]
-
-
-def output_operations():
-    """
-    Вывод 5 последних операций
-    :return: None
-    """
-    out_operations = sorting_by_date()
-    for item in out_operations:
-        print(str_date_str(item['date']) + ' ' + ' ' + item["description"])
-        print(f"{check_from_to(item.get('from'))} --> {check_from_to(item.get('to'))}")
-        print(f"{item['operationAmount']['amount']} {item['operationAmount']['currency']['name']}")
-        print()
 
 
 def str_date_str(date_time_string):
@@ -77,7 +64,7 @@ def check_from_to(_form):
         for i in _form:
             if i.isdigit():
                 ch += i
-        str_out = _form[:_form.find(ch) -1 ]  # символьная часть _form - значения поля "from"
+        str_out = _form[:_form.find(ch) - 1]  # символьная часть _form - значения поля "from"
         numbers_out = _form[_form.find(ch):]  # цифровая часть _form - значения поля "from"
         if len(numbers_out) == 16:  # номер карты 16 цифр
             numbers_out = numbers_out[:4] + ' ' + numbers_out[4:6] + "**" + " " + "****" + " " + numbers_out[-4:]
@@ -87,4 +74,10 @@ def check_from_to(_form):
     else:
         return ("VVVVVVVV")
 
-output_operations()
+
+out_operations = sorting_by_date()
+for item in out_operations:
+    print(str_date_str(item['date']) + ' ' + ' ' + item["description"])
+    print(f"{check_from_to(item.get('from'))} --> {check_from_to(item.get('to'))}")
+    print(f"{item['operationAmount']['amount']} {item['operationAmount']['currency']['name']}")
+    print()
