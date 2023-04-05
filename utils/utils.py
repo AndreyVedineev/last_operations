@@ -69,9 +69,7 @@ def str_date_str(date_time_string):
 def check_from_to(_form):
     """
     :param _form:   Подготовка номера карты или счета, поиск первого числа в строке,
-                    срез с конца строки, маскирование ХХХХ ХХ** **** ХХХХ - карты,
-                    счет **ХХХХ
-
+                    маскирование ХХХХ ХХ** **** ХХХХ - карты, счет **ХХХХ
     :return: маскированую строку
     """
     if _form:
@@ -79,15 +77,14 @@ def check_from_to(_form):
         for i in _form:
             if i.isdigit():
                 ch += i
-        str_out = _form[:_form.find(ch) - 1]  # символьная часть _form - значения поля "from"
+        str_out = _form[:_form.find(ch) -1 ]  # символьная часть _form - значения поля "from"
         numbers_out = _form[_form.find(ch):]  # цифровая часть _form - значения поля "from"
         if len(numbers_out) == 16:  # номер карты 16 цифр
-            numbers_out = numbers_out[:4] + ' ' + numbers_out[5:7] + "**" + " " + "****" + " " + numbers_out[-4:]
+            numbers_out = numbers_out[:4] + ' ' + numbers_out[4:6] + "**" + " " + "****" + " " + numbers_out[-4:]
         elif len(numbers_out) == 20:  # счет имеет 20 цифр
             numbers_out = "**" + numbers_out[-4:]
-        return f"{str_out} {numbers_out} "
+        return f"{str_out} {numbers_out}"
     else:
         return ("VVVVVVVV")
-
 
 output_operations()
