@@ -3,7 +3,6 @@ import os
 from operator import itemgetter
 from datetime import datetime
 
-path_operations = os.path.join('..', 'data', 'operations.json')  # путь к файлу
 number_of_operations = 5  # количество последних операций
 
 
@@ -21,11 +20,10 @@ def load_file(path):
         return file
 
 
-def filter_by_status():
+def filter_by_status(file):
     """
     :return: Возвращает список успешных операций клиента
     """
-    file = load_file(path_operations)
     executed_opertions = []
     for item in file:
         if not item:
@@ -35,12 +33,11 @@ def filter_by_status():
     return executed_opertions
 
 
-def sorting_by_date() -> list:
+def sorting_by_date(file) -> list:
     """
    :return: возвращает отсортированный по "date" список последних {number_of_operations} операций клиента
     """
-    date_operations = filter_by_status()
-    return sorted(date_operations, key=itemgetter('date'), reverse=True)[0:number_of_operations]
+    return sorted(file, key=itemgetter('date'), reverse=True)[:number_of_operations]
 
 
 def str_date_str(date_time_string):
@@ -73,11 +70,3 @@ def check_from_to(_form):
         return f"{str_out} {numbers_out}"
     else:
         return ("VVVVVVVV")
-
-
-out_operations = sorting_by_date()
-for item in out_operations:
-    print(str_date_str(item['date']) + ' ' + ' ' + item["description"])
-    print(f"{check_from_to(item.get('from'))} --> {check_from_to(item.get('to'))}")
-    print(f"{item['operationAmount']['amount']} {item['operationAmount']['currency']['name']}")
-    print()
