@@ -6,7 +6,10 @@ path_operations = os.path.join('data', 'operations.json')  # путь к фай�
 
 
 def main():
-    pass
+    file = load_file(path_operations)
+    filter_file = filter_by_status(file)
+    sort_filter_file = sorting_by_date(filter_file)
+    out_print(sort_filter_file)
 
 
 def out_print(file_sort):
@@ -19,11 +22,6 @@ def out_print(file_sort):
         print(f"{item['operationAmount']['amount']} {item['operationAmount']['currency']['name']}")
         print()
 
-
-file = load_file(path_operations)
-filter_file = filter_by_status(file)
-sort_filter_file = sorting_by_date(filter_file)
-out_print(sort_filter_file)
 
 if __name__ == "__main__":
     main()
