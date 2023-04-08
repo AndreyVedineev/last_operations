@@ -23,5 +23,5 @@ def test_str_date_str():
 def test_check_from_to():
     assert check_from_to("Счет 90424923579946435907") == "Счет **5907"
     assert check_from_to("Maestro 7810846596785568") == "Maestro 7810 84** **** 5568"
-    assert check_from_to(None) == "VVVVVVVV"
+    assert check_from_to(None) == "========"
 

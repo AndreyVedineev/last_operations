@@ -63,4 +63,4 @@ def check_from_to(_form):
             numbers_out = "**" + numbers_out[-4:]
         return f"{str_out} {numbers_out}"
     else:
-        return ("VVVVVVVV")
+        return ("========")
