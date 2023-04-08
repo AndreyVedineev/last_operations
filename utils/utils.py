@@ -1,6 +1,5 @@
 import json
 import os
-from operator import itemgetter
 from datetime import datetime
 
 number_of_operations = 5  # количество последних операций
@@ -24,12 +23,7 @@ def filter_by_status(file):
     """
     :return: Возвращает список успешных операций клиента
     """
-    executed_opertions = []
-    for item in file:
-        if not item:
-            continue
-        if item['state'] == "EXECUTED":
-            executed_opertions.append(item)
+    executed_opertions = [x for x in file if 'state' in x and x['state'] == "EXECUTED"]
     return executed_opertions
 
 
@@ -37,7 +31,7 @@ def sorting_by_date(file) -> list:
     """
    :return: возвращает отсортированный по "date" список последних {number_of_operations} операций клиента
     """
-    return sorted(file, key=itemgetter('date'), reverse=True)[:number_of_operations]
+    return sorted(file, key=lambda x: x["date"], reverse=True)[:number_of_operations]
 
 
 def str_date_str(date_time_string):
